@@ -33,6 +33,12 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
     
+class Size(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    
+    def __str__(self):
+        return self.name
+    
 class Brand(models.Model):
     name = models.CharField(max_length=200, null=True)
 
@@ -48,15 +54,6 @@ class Product(models.Model):
     price = models.FloatField()
     description = models.TextField(blank=True)
     STATUS_CHOICES = [
-    ('large', 'Large'),
-    ('small', 'Small'),
-    ('medium', 'Medium'),
-    ('xl', 'XL'),
-    ('xxl', 'XXL'),
-    ('xxxl', 'XXXL'),
-    ]
-    size = models.CharField(max_length=10, choices=STATUS_CHOICES)
-    STATUS_CHOICES = [
     ('red', 'Red'),
     ('yellow', 'Yellow'),
     ('blue', 'Blue'),
@@ -65,6 +62,8 @@ class Product(models.Model):
     ('purple', 'Purple'),
     ('black', 'Black'),
     ('white', 'White'),
+    ('Grey', 'Grey'),
+    ('Brown', 'Brown'),
     ]
     color = models.CharField(max_length=10, choices=STATUS_CHOICES)
     facebook_link = models.URLField(blank=True, null=True)
@@ -72,6 +71,7 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     tags = models.ManyToManyField(Tag)
+    size = models.ManyToManyField(Size)
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
     
     def __str__(self):
